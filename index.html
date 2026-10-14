@@ -337,5 +337,36 @@ function shareAppLink(platform){
   if(platform=='linkedin'){ url = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encLink; }
   if(platform=='threads'){ url = 'https://www.threads.net/intent/post?text=' + encMsg; }
   if(platform=='email'){ url = 'mailto:?subject=' + encodeURIComponent('Download KAYN App - Kono') + '&body=' +
+// ===== APP LINK SHARE FIX — V39.1 =====
+function getAppLink(){
+  return window.location.href.split('#')[0];
+}
+
+function shareAppLink(platform){
+  var link = getAppLink();
+  var text = "Download KAYN App — Kono Agri-Youth Network 🇸🇱\nGrow Kono • Build Kono • Kono First\nCEO: Musa Tamba Boima, Kono\nLink: " + link;
+  var encText = encodeURIComponent(text);
+  var encLink = encodeURIComponent(link);
+  var url = "";
+
+  if(platform === 'whatsapp'){
+    // WhatsApp — works on phone and PC
+    url = "https://wa.me/?text=" + encText;
+  } else if(platform === 'facebook'){
+    url = "https://www.facebook.com/sharer/sharer.php?u=" + encLink;
+  } else if(platform === 'telegram'){
+    url = "https://t.me/share/url?url=" + encLink + "&text=" + encText;
+  } else if(platform === 'x'){
+    url = "https://twitter.com/intent/tweet?text=" + encText;
+  } else if(platform === 'linkedin'){
+    url = "https://www.linkedin.com/sharing/share-offsite/?url=" + encLink;
+  } else if(platform === 'email'){
+    url = "mailto:?subject=" + encodeURIComponent("Download KAYN App") + "&body=" + encText;
+  } else if(platform === 'sms'){
+    url = "sms:?&body=" + encText;
+  }
+
+  // Try native share on phone first
+  if(n
 </script>
 </body></html>
