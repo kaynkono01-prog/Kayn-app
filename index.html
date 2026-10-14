@@ -321,5 +321,21 @@ function openOfficeApp(app){var count=role=='CEO'?100:50;var templates='';for(va
 function saveOfficeDoc(app){var name=prompt('Name this document:');if(!name)return;var key='kOffice_'+role;var list=JSON.parse(localStorage.getItem(key)||'[]');list.push(app+' — '+name+' | Private to '+role+' | '+new Date().toLocaleString()+' | Folder: My Documents / '+role);localStorage.setItem(key,JSON.stringify(list));alert('✅ Saved to your PRIVATE folder — Only you can see it unless you permit others. Folder: My Documents / '+role+' inside KAYN.');openWin('My Documents — Private Folder ('+role+')',list.map(function(x){return '<div class=item>'+x+' <button onclick="alert(\'Shared with permission\')">Share</button></div>'}).join(''))}
 function showCEOguide(){if(role!=='CEO'){alert('Guide is only in CEO account');return}openWin('KAYN Guide — CEO Only','<h3>📖 CEO Guide — How to Use KAYN Windows OS</h3><ol><li><b>Windows:</b> Tap any dashboard item — it opens in a window. Drag bar to move. - = minimize, ▢ = maximize, X = close.</li><li><b>Right-Click:</b> On PC right-click, on phone long-press for menu: Copy, Cut, Paste, Print.</li><li><b>Left Click:</b> Single click highlights yellow. Double-click opens.</li><li><b>Scroll:</b> One finger scrolls. Two fingers apart = zoom in, together = zoom out. On PC: Ctrl + wheel = zoom.</li><li><b>Office:</b> Open via right-click or MENU → Microsoft Office. CEO has 100 templates per app, others 50.</li><li><b>Private Files:</b> Office files saved to My Documents / '+role+' — private until you Share.</li><li><b>Quotes:</b> Transparent popup, drag to any corner, - to minimize, X to close.</li></ol>')}
 setTimeout(function(){if(role=='CEO'){var btn=document.createElement('button');btn.innerText='📖 CEO GUIDE — Windows OS';btn.className='btn';btn.style.cssText='position:fixed;top:70px;right:10px;z-index:100;width:auto;padding:8px 12px';btn.onclick=showCEOguide;document.body.appendChild(btn)}},1000);
+// ===== FIXED APP LINK SHARING - V39 FINAL =====
+function getAppLink(){ return location.href.split('#')[0]; }
+function shareAppLink(platform){
+  var link = getAppLink();
+  var msg = 'Download KAYN App - Kono Agri-Youth Network\nGrow Kono • Build Kono • Kono First\nCEO: Musa Tamba Boima, Kono, Sierra Leone\nLink: ' + link;
+  var encMsg = encodeURIComponent(msg);
+  var encLink = encodeURIComponent(link);
+  var url = '';
+
+  if(platform=='whatsapp'){ url = 'https://wa.me/?text=' + encMsg; }
+  if(platform=='facebook'){ url = 'https://www.facebook.com/sharer/sharer.php?u=' + encLink + '&quote=' + encMsg; }
+  if(platform=='telegram'){ url = 'https://t.me/share/url?url=' + encLink + '&text=' + encMsg; }
+  if(platform=='x'){ url = 'https://twitter.com/intent/tweet?text=' + encMsg; }
+  if(platform=='linkedin'){ url = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encLink; }
+  if(platform=='threads'){ url = 'https://www.threads.net/intent/post?text=' + encMsg; }
+  if(platform=='email'){ url = 'mailto:?subject=' + encodeURIComponent('Download KAYN App - Kono') + '&body=' +
 </script>
 </body></html>
